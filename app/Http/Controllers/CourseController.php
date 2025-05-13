@@ -2,14 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CourseRequest;
 use App\Models\CoursePublication;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\Course;
 
 class CourseController extends Controller
 {
-    public function createCourse(Request $request) {
-        Course::create($request->all());
+    public function createCourse(CourseRequest $request) {
+        Course::create([...$request->validated(), 'user_id' => Auth::id()]);
 
         return redirect()->route('courses');
     }

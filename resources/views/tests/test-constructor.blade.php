@@ -47,6 +47,9 @@
         #saveForm {
             display: none;
         }
+        .svc-creator__non-commercial-text {
+            display: none;
+        }
     </style>
 </head>
 <body>
@@ -67,15 +70,16 @@
     </form>
 
     <script>
+        // Установка русского языка для SurveyJS Creator
+        SurveyCreator.localization.currentLocale = "ru";
+
         // Инициализация редактора
         const creator = new SurveyCreator.SurveyCreator({
             showLogicTab: true,
-            isAutoSave: true
+            isAutoSave: false // Отключаем автосохранение
         });
         creator.render("surveyCreator");
 
-        // Ключ для localStorage
-        const STORAGE_KEY = 'surveyjs_editor_data';
         let isSavedToServer = false;
         let initialSurveyJson = JSON.stringify(creator.JSON);
 
@@ -93,19 +97,6 @@
             }
         });
 
-        // Отслеживание изменений
-        creator.onModified.add(() => {
-            const surveyName = document.getElementById('surveyName').value || 'Тест';
-            const surveyJson = creator.text;
-
-            localStorage.setItem(STORAGE_KEY, JSON.stringify({
-                name: surveyName,
-                json: surveyJson
-            }));
-
-            showStatus('Автосохранено: ' + new Date().toLocaleTimeString());
-        });
-
         // Отправка на сервер через форму
         document.getElementById('saveBtn').addEventListener('click', () => {
             const surveyName = document.getElementById('surveyName').value || 'Тест';
@@ -118,7 +109,7 @@
             // Отправляем форму
             document.getElementById('saveForm').submit();
 
-            // Обновляем статус (это сработает только если форма не перезагрузит страницу)
+            // Обновляем статус
             isSavedToServer = true;
             initialSurveyJson = JSON.stringify(creator.JSON);
             showStatus('Отправка данных на сервер...', 'info');
@@ -134,15 +125,6 @@
             if (type === 'success') {
                 setTimeout(() => statusEl.textContent = '', 3000);
             }
-        }
-
-        // Загрузка сохраненного теста
-        const savedData = localStorage.getItem(STORAGE_KEY);
-        if (savedData) {
-            const { name, json } = JSON.parse(savedData);
-            document.getElementById('surveyName').value = name;
-            creator.text = json;
-            initialSurveyJson = json;
         }
     </script>
 </body>

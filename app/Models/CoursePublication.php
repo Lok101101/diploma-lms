@@ -12,8 +12,8 @@ class CoursePublication extends Model
     protected $table = 'courses_publications';
 
     protected $fillable = [
-        'name',
         'course_id',
-        'content'
+        'lesson_id',
+        'test_id'
     ];
 }

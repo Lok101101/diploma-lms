@@ -11,11 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('tests', function (Blueprint $table) {
+        Schema::create('courses_publications', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
-            $table->json('content')->nullable();
+            $table->foreignId('course_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('lesson_id')->nullable()->constrained()->cascadeOnDelete();
+            $table->foreignId('test_id')->nullable()->constrained()->cascadeOnDelete();
             $table->timestamps();
         });
     }

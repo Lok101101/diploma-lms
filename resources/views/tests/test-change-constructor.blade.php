@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Редактор теста</title>
+    <title>Конструктор теста {{ $test->name }}</title>
     <link href="https://unpkg.com/survey-core/survey-core.min.css" rel="stylesheet">
     <script src="https://unpkg.com/survey-core/survey.core.min.js"></script>
     <script src="https://unpkg.com/survey-js-ui/survey-js-ui.min.js"></script>
@@ -45,14 +45,19 @@
         #surveyCreator {
             height: calc(100vh - 60px);
         }
+        .svc-creator__non-commercial-text {
+            display: none;
+        }
     </style>
 </head>
 <body>
     <div class="header">
-        <div class="flex items-center gap-3">
-            <h2 class="font-bold text-3xl">{{ $test->name}}</h2>
-            <button id="saveBtn">Сохранить изменения</button>
-            <span id="statusMessage"></span>
+        <div class="flex items-center w-full justify-between">
+            <h2 class="font-bold text-4xl">{{ $test->name}}</h2>
+            <div>
+                <span id="statusMessage" style=""></span>
+                <button id="saveBtn">Сохранить изменения</button>
+            </div>
         </div>
     </div>
     <div id="surveyCreator"></div>
@@ -64,6 +69,7 @@
     </form>
 
     <script>
+        SurveyCreator.localization.currentLocale = "ru";
         // 1. Безопасное получение данных
         const testData = @json($test->content ?? '{}');
         const initialData = {

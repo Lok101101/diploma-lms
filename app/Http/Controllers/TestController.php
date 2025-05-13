@@ -18,13 +18,21 @@ class TestController extends Controller
     }
 
     public function changeTest(Test $test) {
-        // dump($test->content);
-        // die();
         return view('tests.test-change-constructor', ['test' => $test]);
     }
 
     public function saveTest(Request $request) {
         Test::where('id', '=', $request->id)->update(['content' => $request->content]);
+
+        return redirect()->route('getMyTests');
+    }
+
+    public function test() {
+        return view('tests.test', ['test' => Test::inRandomOrder()->first()]);
+    }
+
+    public function deleteTest(Test $test) {
+        $test->delete();
 
         return redirect()->route('getMyTests');
     }

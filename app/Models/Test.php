@@ -11,6 +11,7 @@ class Test extends Model
 
     protected $fillable = [
         'name',
+        'user_id',
         'content'
     ];
 }

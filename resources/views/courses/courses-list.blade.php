@@ -6,12 +6,12 @@
 
 <div class="grid grid-cols-1 gap-6">
     @if ($courses->isEmpty())
-        <h2 class="flex justify-center text-bold text-3xl">У вас пока нет созданных курсов</h2>
-        <div class="flex justify-center">
+        <h2 class="text-center text-bold text-3xl">Пока нет ни одного курса
+        <div class="flex justify-center mt-5">
             <a href="{{ route('create-course') }}"
-               class="px-5 py-2.5 bg-[#17b292] text-white rounded-lg hover:bg-[#11957a] transition-colors flex items-center">
-                Новый курс
-                <svg xmlns="http://www.w3.org/2000/svg" class="ml-2 w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+               class="px-5 py-2.5 bg-[#17b292] text-white rounded-lg hover:bg-[#11957a] transition-colors flex items-center gap-1">
+                Создать курс
+                <svg xmlns="http://www.w3.org/2000/svg" class="ml-2 w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
                 </svg>
             </a>
@@ -50,7 +50,7 @@
                     </div>
 
                     <p class="text-gray-600 mb-6 line-clamp-3">
-                        {{ $course->description ?? 'Описание курса отсутствует' }}
+                        {{ $course->description ?? '' }}
                     </p>
 
                     <div class="flex justify-end">
