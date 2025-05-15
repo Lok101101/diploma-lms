@@ -39,7 +39,7 @@
 
                 <!-- Тело карточки -->
                 <div class="p-6">
-                    <div class="flex flex-wrap justify-between gap-4 mb-4">
+                    <div class="flex justify-between gap-4 mb-4">
                         <p class="text-gray-600 mb-6 line-clamp-3">
                             {{ $course->description ?? '' }}
                         </p>

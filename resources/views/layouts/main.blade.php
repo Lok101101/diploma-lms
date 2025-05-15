@@ -41,7 +41,6 @@
           </svg>
           </a>
           <!-- END Brand -->
-
           <!-- Close Sidebar on Mobile -->
           <div class="lg:hidden">
             <button
@@ -77,18 +76,9 @@
             <path d="M12 3L1 9l11 6 9-4.91V17h2V9M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82z"/>
           </svg>
             <span>Курсы</span>
-            <a
-            href="{{ route('performance') }}"
-            class="{{ request()->routeIs('performance') ? 'current' : ''}} flex items-center gap-3 rounded-lg px-4 py-2.5 font-semibold text-slate-600 hover:bg-white hover:shadow-xs hover:shadow-slate-300/50 active:bg-white/75 active:text-slate-800 active:shadow-slate-300/10"
-          >
-          <svg xmlns="http://www.w3.org/2000/svg" class="inline-block h-7 w-7" viewBox="0 0 24 24" fill="none" stroke="#6A7A8F" stroke-width="2">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M3 20h18M7 16l3-3 2 2 4-5 2 1" />
-            <path stroke-linecap="round" d="M7 16l3-3 2 2 4-5 2 1" />
-          </svg>
-            <span class="">Моя успеваемость</span>
-            </a>
-          </a>
             @auth
+            
+            @teacher
             <a
             href="{{ route('getMyTests') }}"
             class="{{ request()->routeIs('getMyTests') ? 'current' : ''}} flex items-center gap-3 rounded-lg px-4 py-2.5 font-semibold text-slate-600 hover:bg-white hover:shadow-xs hover:shadow-slate-300/50 active:bg-white/75 active:text-slate-800 active:shadow-slate-300/10"
@@ -107,6 +97,19 @@
             </svg>
             <span class="">Мои лекции</span>
             </a>
+            @else
+            <a
+            href="{{ route('performance') }}"
+            class="{{ request()->routeIs('performance') ? 'current' : ''}} flex items-center gap-3 rounded-lg px-4 py-2.5 font-semibold text-slate-600 hover:bg-white hover:shadow-xs hover:shadow-slate-300/50 active:bg-white/75 active:text-slate-800 active:shadow-slate-300/10"
+          >
+          <svg xmlns="http://www.w3.org/2000/svg" class="inline-block h-7 w-7" viewBox="0 0 24 24" fill="none" stroke="#6A7A8F" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3 20h18M7 16l3-3 2 2 4-5 2 1" />
+            <path stroke-linecap="round" d="M7 16l3-3 2 2 4-5 2 1" />
+          </svg>
+            <span class="">Моя успеваемость</span>
+            </a>
+          </a>
+            @endTeacher
             @endauth
         </div>
         <!-- END Main Navigation -->

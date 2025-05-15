@@ -3,9 +3,7 @@
 @section('title', 'Моя успеваемость')
 
 @section('content')
-@if ($passesTests == null)
-    <h2 class="text-3xl text-center">Вы ещё не прошли ни одного теста. Пройдите хотя бы один тест, чтобы узнать свою успеваемость</h2>
-@else
+@isset($passesTests)
 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
     @foreach ($passesTests as $passedTest)
     <div class="bg-white rounded-2xl shadow-md border border-gray-100 p-6 hover:shadow-lg transition-all">
@@ -29,5 +27,7 @@
     </div>
     @endforeach
 </div>
-@endif
+@else
+<h2 class="text-3xl text-center">Вы ещё не прошли ни одного теста. Пройдите хотя бы один тест, чтобы узнать свою успеваемость</h2>
+@endisset
 @endsection

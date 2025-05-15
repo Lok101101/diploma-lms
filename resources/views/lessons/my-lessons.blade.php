@@ -5,8 +5,9 @@
 @section('content')
 
 <div class="grid grid-cols-1 gap-6">
+    @isset($course) <h2 class="font-bold text-4xl">Выберите лекцию для добавления в курс {{ $course->name }}</h2> @endisset
     @if ($lessons->isEmpty())
-        <h2 class="flex justify-center text-bold text-3xl">У вас пока нет созданных лекций</h2>
+        <h2 class="flex justify-center text-bold text-3xl mt-2">У вас пока нет созданных лекций</h2>
         @empty($course)
         <div class="flex justify-center">
             <a href="{{ route('newLessonConstructor') }}"

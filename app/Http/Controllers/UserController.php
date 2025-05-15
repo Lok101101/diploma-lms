@@ -6,6 +6,7 @@ use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterRequest;
 use App\Models\PassedTest;
 use App\Models\User;
+use App\Models\Role;
 use \Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
@@ -15,7 +16,8 @@ class UserController extends Controller
     public function registerUser(RegisterRequest $request) {
         $user = User::create([
             ...$request->validated(),
-            'password' => Hash::make($request->password)
+            'password' => Hash::make($request->password),
+            'role_id' => Role::where('name', '=', 'student')->first()->id
         ]);
 
         Auth::login($user);
@@ -44,8 +46,12 @@ class UserController extends Controller
         foreach ($passesTests as $passedTest) {
             array_push($estimations, $passedTest->estimation);
         }
-        $avgEstimation = array_sum($estimations) / count($passesTests);
 
-        return view('user.performance', ['passesTests' => $passesTests, 'avgEstimation' => $avgEstimation]);
+        if (count($passesTests) !== 0) {
+            $avgEstimation = array_sum($estimations) / count($passesTests);
+            return view('user.performance', ['passesTests' => $passesTests, 'avgEstimation' => $avgEstimation]);
+        }
+
+        return view('user.performance');
     }
 }
