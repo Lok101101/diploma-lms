@@ -13,6 +13,12 @@ class PassedTest extends Model
 
     protected $fillable = [
         'user_id',
-        'test_id'
+        'test_id',
+        'estimation'
     ];
+
+    public function test()
+    {
+        return $this->belongsTo(Test::class);
+    }
 }

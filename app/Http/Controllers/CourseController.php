@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CourseRequest;
 use App\Models\CoursePublication;
+use App\Models\Lesson;
+use App\Models\Test;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\Course;
@@ -21,6 +23,34 @@ class CourseController extends Controller
     }
 
     public function getCoursePublications(Course $course) {
-        return view('courses.course', ['course_publications' => $course->publications]);
+        foreach ($course->publications as $publication) {
+            if ($publication->test === null) continue;
+
+            if ($publication->test->passesTests !== null) {
+                $isPassedByUser = $publication->test->passesTests->where('user_id', '=',Auth::id())->isNotEmpty();
+
+                $publication->test->setAttribute('isPassedByUser', $isPassedByUser);
+            }
+        }
+
+        return view('courses.course', ['course' => $course]);
+    }
+
+    public function addLessonToCourse(Course $course, Lesson $lesson) {
+        CoursePublication::create([
+            'course_id' => $course->id,
+            'lesson_id' => $lesson->id
+        ]);
+
+        return redirect()->route('getCoursePublications', ['course' => $course]);
+    }
+
+    public function addTestToCourse(Course $course, Test $test) {
+        CoursePublication::create([
+            'course_id' => $course->id,
+            'test_id' => $test->id
+        ]);
+
+        return redirect()->route('getCoursePublications', ['course' => $course]);
     }
 }

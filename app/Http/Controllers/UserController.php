@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterRequest;
+use App\Models\PassedTest;
 use App\Models\User;
 use \Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
@@ -34,5 +35,17 @@ class UserController extends Controller
         Auth::logout();
 
         return redirect()->route('courses');
+    }
+
+    public function getUserPerformance() {
+        $passesTests = PassedTest::where('user_id', '=', Auth::id())->get();
+
+        $estimations = [];
+        foreach ($passesTests as $passedTest) {
+            array_push($estimations, $passedTest->estimation);
+        }
+        $avgEstimation = array_sum($estimations) / count($passesTests);
+
+        return view('user.performance', ['passesTests' => $passesTests, 'avgEstimation' => $avgEstimation]);
     }
 }

@@ -145,10 +145,11 @@
                 </div>
             </div>
             <div id="detailedResults"></div>
-            <a href="{{ route('getMyTests') }}"
-            class="px-5 py-2.5 bg-[#17b292] text-white rounded-lg hover:bg-[#11957a] transition-colors flex items-center justify-center font-bold text-1xl">
-                Завершить
-            </a>
+            <form action="{{ route('completeTest', $test) }}" method="POST" class="flex justify-center">
+                @csrf
+                <input type="hidden" value="" name="estimation" id="estimation">
+                <button type="submit" class="px-5 py-2.5 bg-[#17b292] text-white rounded-lg hover:bg-[#11957a] transition-colors flex items-center justify-center font-bold text-2xl w-50 cursor-pointer">Завершить</button>
+            </form>
         </div>
     </div>
 
@@ -186,20 +187,27 @@
             // Система оценок
             let grade = '';
             let gradeClass = '';
+            let estimation = 0;
 
             if (percentage >= 90) {
-                grade = 'Отлично';
+                estimation = 5;
+                grade = '5 (Отлично)';
                 gradeClass = 'excellent';
             } else if (percentage >= 75) {
-                grade = 'Хорошо';
+                estimation = 4;
+                grade = '4 (Хорошо)';
                 gradeClass = 'good';
             } else if (percentage >= 30) {
-                grade = 'Удовлетворительно';
+                estimation = 3;
+                grade = '3 (Удовлетворительно)';
                 gradeClass = 'satisfactory';
             } else if (percentage <= 29) {
-                grade = 'Неудовлетворительно';
+                estimation = 2;
+                grade = '2 (Неудовлетворительно)';
                 gradeClass = 'poor';
             }
+
+            document.getElementById('estimation').value = estimation;
 
             // Добавляем отображение оценки
             const gradeElement = document.createElement('div');

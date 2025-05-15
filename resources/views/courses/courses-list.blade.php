@@ -30,16 +30,19 @@
         @foreach($courses as $course)
             <div class="bg-white rounded-lg shadow-md overflow-hidden transition-all duration-300 hover:shadow-lg w-full border border-gray-100">
                 <!-- Шапка карточки -->
-                <div class="bg-[#17b292] px-6 py-4">
+                <div class="bg-[#17b292] px-5 py-4 flex items-center gap-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="inline-block w-9 h-9" fill="white" viewBox="0 0 24 24">
+                        <path d="M12 3L1 9l11 6 9-4.91V17h2V9M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82z"/>
+                    </svg>
                     <h2 class="text-xl font-bold text-white">{{ $course->name }}</h2>
                 </div>
 
                 <!-- Тело карточки -->
                 <div class="p-6">
-                    <div class="flex flex-wrap items-center justify-between gap-4 mb-4">
-                        <span class="inline-block bg-[#e0f7f2] text-[#107a6a] text-xs px-3 py-1 rounded-full font-semibold">
-                            {{ $course->publications_count }} {{ trans_choice('публикация|публикации|публикаций', $course->publications_count) }}
-                        </span>
+                    <div class="flex flex-wrap justify-between gap-4 mb-4">
+                        <p class="text-gray-600 mb-6 line-clamp-3">
+                            {{ $course->description ?? '' }}
+                        </p>
 
                         <span class="text-sm text-gray-500 flex">
                             <svg xmlns="http://www.w3.org/2000/svg" class="inline-block w-5 h-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -48,10 +51,6 @@
                             {{ $course->created_at->format('d.m.Y') }}
                         </span>
                     </div>
-
-                    <p class="text-gray-600 mb-6 line-clamp-3">
-                        {{ $course->description ?? '' }}
-                    </p>
 
                     <div class="flex justify-end">
                         <a href="{{ route('getCoursePublications', $course) }}"

@@ -2,18 +2,25 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Course;
+use App\Models\PassedTest;
 use App\Models\Test;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
 class TestController extends Controller
 {
     public function createTest(Request $request) {
-        Test::create($request->all());
+        Test::create([...$request->all(), 'user_id' => Auth::id()]);
 
         return redirect()->route('getMyTests');
     }
 
-    public function getMyTests(Request $request) {
+    public function getMyTests(Course $course = null) {
+        if ($course != null) {
+            return view('tests.my-tests', ['tests' => Test::where('user_id', '=', Auth::id())->get(), 'course' => $course]);
+        }
+
         return view('tests.my-tests', ['tests' => Test::get()]);
     }
 
@@ -27,13 +34,23 @@ class TestController extends Controller
         return redirect()->route('getMyTests');
     }
 
-    public function test() {
-        return view('tests.test', ['test' => Test::inRandomOrder()->first()]);
+    public function getTest(Test $test) {
+        return view('tests.test', ['test' => $test]);
     }
 
     public function deleteTest(Test $test) {
         $test->delete();
 
         return redirect()->route('getMyTests');
+    }
+
+    public function completeTest(Test $test, Request $request) {
+        PassedTest::create([
+            'user_id' => Auth::id(),
+            'test_id' => $test->id,
+            'estimation' => $request->estimation
+        ]);
+
+        return redirect()->route('courses');
     }
 }
