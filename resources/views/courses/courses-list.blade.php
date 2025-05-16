@@ -8,6 +8,7 @@
     @if ($courses->isEmpty())
         <h2 class="text-center text-bold text-3xl">Пока нет ни одного курса
         <div class="flex justify-center mt-5">
+            @teacher
             <a href="{{ route('create-course') }}"
                class="px-5 py-2.5 bg-[#17b292] text-white rounded-lg hover:bg-[#11957a] transition-colors flex items-center gap-1">
                 Создать курс
@@ -15,9 +16,11 @@
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
                 </svg>
             </a>
+            @endTeacher
         </div>
     @else
     <div class="flex justify-start">
+        @teacher
         <a href="{{ route('create-course') }}"
         class="px-5 py-2.5 bg-[#17b292] text-white rounded-lg hover:bg-[#11957a] transition-colors flex items-center">
             Новый курс
@@ -25,6 +28,7 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
             </svg>
         </a>
+        @endTeacher
     </div>
 
         @foreach($courses as $course)

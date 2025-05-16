@@ -21,7 +21,7 @@ class TestController extends Controller
             return view('tests.my-tests', ['tests' => Test::where('user_id', '=', Auth::id())->get(), 'course' => $course]);
         }
 
-        return view('tests.my-tests', ['tests' => Test::get()]);
+        return view('tests.my-tests', ['tests' => Test::where('user_id', '=', Auth::id())->get()]);
     }
 
     public function changeTest(Test $test) {

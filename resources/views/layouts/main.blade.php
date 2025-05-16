@@ -76,8 +76,9 @@
             <path d="M12 3L1 9l11 6 9-4.91V17h2V9M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82z"/>
           </svg>
             <span>Курсы</span>
+            </a>
             @auth
-            
+
             @teacher
             <a
             href="{{ route('getMyTests') }}"
@@ -108,7 +109,6 @@
           </svg>
             <span class="">Моя успеваемость</span>
             </a>
-          </a>
             @endTeacher
             @endauth
         </div>
@@ -134,7 +134,7 @@
             @guest
             <a
             href="{{ route('login') }}"
-            class="flex items-center gap-3 rounded-lg px-4 py-2.5 font-semibold text-slate-600 hover:bg-white hover:shadow-xs hover:shadow-slate-300/50 active:bg-white/75 active:text-slate-800 active:shadow-slate-300/10">
+            class="{{ request()->routeIs('login') ? 'current' : ''}} flex items-center gap-3 rounded-lg px-4 py-2.5 font-semibold text-slate-600 hover:bg-white hover:shadow-xs hover:shadow-slate-300/50 active:bg-white/75 active:text-slate-800 active:shadow-slate-300/10">
             <svg
                 class="bi bi-door-open inline-block size-6 text-slate-400"
                 xmlns="http://www.w3.org/2000/svg"
@@ -147,7 +147,7 @@
             </a>
             <a
             href="{{ route('register') }}"
-            class="flex items-center gap-3 rounded-lg px-4 py-2.5 font-semibold text-slate-600 hover:bg-white hover:shadow-xs hover:shadow-slate-300/50 active:bg-white/75 active:text-slate-800 active:shadow-slate-300/10">
+            class="{{ request()->routeIs('register') ? 'current' : ''}} flex items-center gap-3 rounded-lg px-4 py-2.5 font-semibold text-slate-600 hover:bg-white hover:shadow-xs hover:shadow-slate-300/50 active:bg-white/75 active:text-slate-800 active:shadow-slate-300/10">
             <svg
                 class="bi bi-person-plus inline-block size-6 text-slate-400"
                 xmlns="http://www.w3.org/2000/svg"
