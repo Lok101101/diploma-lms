@@ -22,6 +22,12 @@ class CourseController extends Controller
         return view('courses.courses-list', ['courses' => Course::get()]);
     }
 
+    public function deleteCourse(Course $course) {
+        $course->delete();
+
+        return redirect()->route('courses');
+    }
+
     public function getCoursePublications(Course $course) {
         foreach ($course->publications as $publication) {
             if ($publication->test === null) continue;
@@ -34,6 +40,12 @@ class CourseController extends Controller
         }
 
         return view('courses.course', ['course' => $course]);
+    }
+
+    public function deleteCoursePublication(CoursePublication $coursePublication) {
+        $coursePublication->delete();
+
+        return redirect()->back();
     }
 
     public function addLessonToCourse(Course $course, Lesson $lesson) {

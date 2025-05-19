@@ -9,60 +9,29 @@
     <script src="https://unpkg.com/survey-creator-core/survey-creator-core.min.js"></script>
     <script src="https://unpkg.com/survey-creator-js/survey-creator-js.min.js"></script>
     <script src="https://unpkg.com/survey-creator-core/survey-creator-core.i18n.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        .header {
-            padding: 15px;
-            background: #f5f5f5;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        #surveyName {
-            padding: 8px;
-            width: 300px;
-            font-size: 16px;
-        }
-        #saveBtn {
-            padding: 8px 20px;
-            background: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 16px;
-        }
-        #saveBtn:hover {
-            background: #45a049;
-        }
-        #statusMessage {
-            margin-left: 10px;
-            color: #666;
-            font-style: italic;
-        }
-        #surveyCreator {
-            height: calc(100vh - 60px);
-        }
         .svc-creator__non-commercial-text {
             display: none;
         }
     </style>
 </head>
-<body>
-    <div class="header">
-        <div class="flex items-center w-full justify-between">
-            <h2 class="font-bold text-4xl">{{ $test->name}}</h2>
-            <div>
-                <span id="statusMessage" style=""></span>
-                <button id="saveBtn">Сохранить изменения</button>
+<body class="h-screen overflow-hidden bg-gray-50">
+    <div class="header bg-gray-100 p-4 border-b border-gray-200">
+        <div class="flex items-center justify-between w-full">
+            <h2 class="text-4xl font-bold text-gray-800">{{ $test->name }}</h2>
+            <div class="flex items-center">
+                <span id="statusMessage" class="ml-3 text-gray-600 italic"></span>
+                <button id="saveBtn" class="ml-4 px-5 py-2 bg-green-500 hover:bg-green-600 text-white rounded-lg transition-colors">
+                    Сохранить изменения
+                </button>
             </div>
         </div>
     </div>
-    <div id="surveyCreator"></div>
 
-    <form id="saveForm" method="POST" action="{{ route('saveTest') }}">
+    <div id="surveyCreator" class="h-[calc(100vh-72px)]"></div>
+
+    <form id="saveForm" method="POST" action="{{ route('saveTest') }}" class="hidden">
         @csrf
         <input type="hidden" name="id" id="formSurveyId" value="{{ $test->id }}">
         <input type="hidden" name="content" id="formSurveyJson">
@@ -70,24 +39,31 @@
 
     <script>
         SurveyCreator.localization.currentLocale = "ru";
-        // 1. Безопасное получение данных
+
+        SurveyCreator.localization.locales["ru"].pe = {
+            ...SurveyCreator.localization.locales["ru"].pe,
+            clear: "Очистить",
+            change: "Поменять",
+            set: "Установить",
+            correctAnswer: "Правильный ответ",
+            clearCorrectAnswer: "Сбросить правильный ответ"
+        };
+
         const testData = @json($test->content ?? '{}');
         const initialData = {
             name: '{{ $test->name }}',
             content: testData && typeof testData === 'object' ? testData : JSON.parse(testData || '{}')
         };
 
-        // 2. Инициализация редактора
         const creator = new SurveyCreator.SurveyCreator({
             showLogicTab: true,
-            isAutoSave: true
+            isAutoSave: true,
+            showTranslationTab: false
         });
 
-        // 3. Загрузка данных в редактор
         creator.text = JSON.stringify(initialData.content);
         creator.render("surveyCreator");
 
-        // 4. Отслеживание изменений
         let initialJson = creator.text;
         let hasChanges = false;
 
@@ -95,7 +71,6 @@
             hasChanges = creator.text !== initialJson;
         });
 
-        // 5. Обработчик beforeunload (опционально)
         function beforeUnloadHandler(e) {
             if (hasChanges) {
                 e.preventDefault();
@@ -105,24 +80,19 @@
         }
         window.addEventListener('beforeunload', beforeUnloadHandler);
 
-        // 6. Сохранение формы и отключение beforeunload
-        document.getElementById('saveBtn').addEventListener('click', function () {
+        document.getElementById('saveBtn').addEventListener('click', function() {
             window.removeEventListener('beforeunload', beforeUnloadHandler);
-
-            // Заполняем и отправляем форму
             document.getElementById('formSurveyJson').value = creator.text || '{}';
             document.getElementById('saveForm').submit();
-
             showStatus('Сохранение...', 'info');
-    });
+        });
 
-
-        // 7. Статус
         function showStatus(message, type = 'info') {
             const statusEl = document.getElementById('statusMessage');
             statusEl.textContent = message;
-            statusEl.style.color = type === 'success' ? 'green' :
-                                  type === 'error' ? 'red' : '#666';
+            statusEl.className = `ml-3 ${type === 'success' ? 'text-green-600' :
+                               type === 'error' ? 'text-red-600' : 'text-gray-600'} italic`;
+
             if (type === 'success') {
                 setTimeout(() => statusEl.textContent = '', 5000);
             }

@@ -23,7 +23,7 @@ class CourseRequest extends FormRequest
     {
         return [
             'name' => 'required|string',
-            'description' => 'nullable|string'
+            'description' => 'nullable|string|max:250'
         ];
     }
 }

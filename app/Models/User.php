@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use App\Models\Role;
+use App\Models\PassedTest;
 
 class User extends Authenticatable
 {
@@ -47,5 +48,19 @@ class User extends Authenticatable
     public function role()
     {
         return $this->belongsTo(Role::class);
+    }
+
+    public function passesTests() {
+        return $this->hasMany(PassedTest::class);
+    }
+
+    public function getPassesTestsCountAttribute()
+    {
+        return $this->passesTests->count() ?? 0;
+    }
+
+    public function getAvgEstimationAttribute()
+    {
+        return $this->passesTests->avg('estimation') ?? 0;
     }
 }

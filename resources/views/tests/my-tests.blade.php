@@ -8,7 +8,6 @@
     @isset($course) <h2 class="font-bold text-4xl">Выберите тест для добавления в курс {{ $course->name }}</h2> @endisset
     @if ($tests->isEmpty())
         <h2 class="flex justify-center text-bold text-3xl">У вас пока нет созданных тестов</h2>
-        @empty($course)
         <div class="flex justify-center">
             <a href="{{ route('testConstructor') }}"
                class="px-5 py-2.5 bg-[#1a9b9e] text-white rounded-lg hover:bg-[#158487] transition-colors flex items-center">
@@ -18,22 +17,29 @@
                 </svg>
             </a>
         </div>
-        @endempty
     @else
-        @empty($course)
-        <div class="flex justify-start">
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-4">
+            <div class="relative w-full sm:max-w-md">
+                <input type="text" id="testSearch" placeholder="Поиск по названию теста..." class="w-full pl-10 pr-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#158487] focus:border-transparent">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 absolute left-3 top-2.5 text-gray-400" fill="none"
+                     viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                          d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                </svg>
+            </div>
+
+            @teacher
             <a href="{{ route('testConstructor') }}"
-            class="px-5 py-2.5 bg-[#1a9b9e] text-white rounded-lg hover:bg-[#158487] transition-colors flex items-center">
+               class="px-5 py-2.5 bg-[#1a9b9e] text-white rounded-lg hover:bg-[#158487] transition-colors flex items-center justify-center sm:justify-start whitespace-nowrap">
                 Новый тест
                 <svg xmlns="http://www.w3.org/2000/svg" class="ml-2 w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
                 </svg>
             </a>
+            @endTeacher
         </div>
-        @endempty
         @foreach($tests as $test)
-            <div class="bg-white rounded-lg shadow-md overflow-hidden transition-all duration-300 hover:shadow-lg w-full border border-gray-100">
-                <!-- Шапка карточки -->
+            <div class="bg-white rounded-lg shadow-md overflow-hidden transition-all duration-300 hover:shadow-lg w-full border border-gray-100 test-card" data-name="{{ mb_strtolower($test->name) }}">
                 <div class="bg-[#1a9b9e] px-6 py-4 flex items-center gap-2">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
@@ -41,7 +47,6 @@
                     <h2 class="text-xl font-bold text-white">{{ $test->name }}</h2>
                 </div>
 
-                <!-- Тело карточки -->
                 <div class="p-6">
                     <div class="flex flex-wrap items-center justify-between gap-4 mb-6">
                         <div></div>
@@ -69,7 +74,7 @@
                         </a>
 
                         <a href="{{ route('changeTest', $test) }}"
-                        class="px-5 py-2 bg-[#1a9b9e] text-white rounded-lg hover:bg-[#158487] transition-colors flex items-center">
+                        class="px-4 py-2 bg-[#1a9b9e] text-white rounded-lg hover:bg-[#158487] transition-colors flex items-center">
                             Редактировать
                             <svg xmlns="http://www.w3.org/2000/svg" class="ml-2 w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
@@ -82,4 +87,23 @@
         @endforeach
     @endif
 </div>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const searchInput = document.getElementById('testSearch');
+        const cards = document.querySelectorAll('.test-card');
+
+        searchInput.addEventListener('input', function () {
+            const query = this.value.trim().toLowerCase();
+
+            cards.forEach(card => {
+                const name = card.getAttribute('data-name');
+                if (name.includes(query)) {
+                    card.style.display = '';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        });
+    });
+</script>
 @endsection

@@ -28,6 +28,6 @@
     @endforeach
 </div>
 @else
-<h2 class="text-3xl text-center">Вы ещё не прошли ни одного теста. Пройдите хотя бы один тест, чтобы узнать свою успеваемость</h2>
+<h2 class="text-3xl text-center"><span class="font-bold">{{ Auth::user()->name}}</span>, вы ещё не прошли ни одного теста. Пройдите хотя бы один тест, чтобы узнать свою успеваемость</h2>
 @endisset
 @endsection

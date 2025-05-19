@@ -36,10 +36,10 @@ class UserController extends Controller
     public function logoutUser() {
         Auth::logout();
 
-        return redirect()->route('courses');
+        return redirect()->route('login');
     }
 
-    public function getUserPerformance() {
+    public function getUserPerformance(User $user = null) {
         $passesTests = PassedTest::where('user_id', '=', Auth::id())->get();
 
         $estimations = [];
@@ -49,9 +49,15 @@ class UserController extends Controller
 
         if (count($passesTests) !== 0) {
             $avgEstimation = array_sum($estimations) / count($passesTests);
-            return view('user.performance', ['passesTests' => $passesTests, 'avgEstimation' => $avgEstimation]);
+            return view('performance.student-performance', ['passesTests' => $passesTests, 'avgEstimation' => $avgEstimation]);
         }
 
-        return view('user.performance');
+        return view('performance.student-performance');
+    }
+
+    public function getAllUsersPerformance() {
+        $users = User::where('role_id', '=', Role::where('name', '=', 'student')->first()->id)->get();
+
+        return view('performance.teacher-performance', ['users' => $users]);
     }
 }

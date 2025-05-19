@@ -3,46 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
   <title>Конструктор статьи</title>
   <style>
-    body {
-      font-family: sans-serif;
-      background: #f3f3f3;
-      padding: 2rem;
-      max-width: 930px;
-      margin: 0 auto;
-    }
-    #editorjs {
-      background: white;
-      padding: 2rem;
-      border-radius: 8px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-      min-height: 300px;
-    }
-    .controls {
-      margin-bottom: 1rem;
-    }
-    input, button {
-      padding: 0.5rem 1rem;
-      font-size: 16px;
-      margin-right: 0.5rem;
-    }
-    button {
-      background-color: #4CAF50;
-      color: white;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-    }
-    button:hover {
-      background-color: #45a049;
-    }
-    #statusMessage {
-      margin-left: 1rem;
-      font-size: 14px;
-      color: #666;
-    }
     .ce-header {
       padding: 1em 0;
       margin: 0;
@@ -62,31 +25,36 @@
     }
   </style>
 </head>
-<body onload="initEditor()">
-    <div class="flex justify-between">
-        @isset($lesson)
-        <input type="text" id="lessonTitle" placeholder="Название лекции" style="padding: 0.5rem; font-size: 1rem; width: 50%; background-color: white; border: 1px solid gray; border-radius: 5px" value="{{ $lesson->name }}">
-        @else
-        <input type="text" id="lessonTitle" placeholder="Название лекции" style="padding: 0.5rem; font-size: 1rem; width: 50%; background-color: white; border: 1px solid gray; border-radius: 5px">
-        @endisset
-        <button id="saveBtn">Сохранить</button>
-    </div>
+<body class="bg-gray-100 p-8 max-w-6xl mx-auto" onload="initEditor()">
+  <div class="flex justify-between items-center mb-6">
+    @isset($lesson)
+      <input type="text" id="lessonTitle" placeholder="Название лекции"
+             class="w-50 px-4 py-2 text-base bg-white border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+             value="{{ $lesson->name }}">
+    @else
+      <input type="text" id="lessonTitle" placeholder="Название лекции"
+             class="w-50 px-4 py-2 text-base bg-white border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent">
+    @endisset
 
-  <div id="editorjs" style="margin-top: 2rem;"></div>
+    <button id="saveBtn" class="px-6 py-2 bg-green-500 hover:bg-green-600 text-white rounded-lg transition-colors">
+      Сохранить
+    </button>
+  </div>
 
-  <!-- Форма для отправки статьи на сервер -->
+  <div id="editorjs" class="bg-white p-8 rounded-lg shadow-md min-h-[300px]"></div>
+
   @isset($lesson)
-  <form id="saveForm" method="POST" action="{{ route('changeLesson', $lesson) }}">
-    @csrf
-    <input type="hidden" name="name" id="formTitle">
-    <input type="hidden" name="content" id="formContent">
-  </form>
+    <form id="saveForm" method="POST" action="{{ route('changeLesson', $lesson) }}" class="hidden">
+      @csrf
+      <input type="hidden" name="name" id="formTitle">
+      <input type="hidden" name="content" id="formContent">
+    </form>
   @else
-  <form id="saveForm" method="POST" action="{{ route('createLesson') }}">
-    @csrf
-    <input type="hidden" name="name" id="formTitle">
-    <input type="hidden" name="content" id="formContent">
-  </form>
+    <form id="saveForm" method="POST" action="{{ route('createLesson') }}" class="hidden">
+      @csrf
+      <input type="hidden" name="name" id="formTitle">
+      <input type="hidden" name="content" id="formContent">
+    </form>
   @endisset
 
   <script type="module">
@@ -173,7 +141,7 @@
           linkTool: {
             class: LinkTool,
             config: {
-              endpoint: '/fetch-url' // Ваш endpoint для получения метаданных ссылки
+              endpoint: '/fetch-url'
             }
           },
           embed: {
@@ -298,7 +266,6 @@
         }
       });
 
-      // Кнопка сохранения
       document.getElementById('saveBtn').addEventListener('click', async () => {
         const title = document.getElementById('lessonTitle').value;
         if (!title) {
@@ -318,7 +285,6 @@
         }
       });
 
-      // Предупреждение при попытке уйти с несохранёнными изменениями
       window.addEventListener('beforeunload', (e) => {
         if (isDirty) {
           e.preventDefault();

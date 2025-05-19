@@ -6,9 +6,10 @@
 <form class="max-w-sm" action="{{ @route('create-course') }}" method="POST">
     @csrf
     <div class="mb-3">
+        <h4 class="mb-1">Название</h4>
         <input type="name" id="name" name="name"
         class="@error("name") border-red-500 @else border-gray-300 @enderror bg-white-50 border text-slate-600 outline-none transition-all duration-200 focus:border-[#17b292] focus:ring-2 focus:ring-[#17b292]/20 hover:border-[#17b292] text-sm rounded-lg block w-full px-2.5 py-3"
-        value="{{ @old('name') }}" placeholder="Название" required>
+        value="{{ @old('name') }}" placeholder="" required>
         @error('name')
         <div class="mt-1 flex items-center text-sm text-red-600">
             <svg class="mr-1 h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
@@ -19,9 +20,10 @@
         @enderror
     </div>
     <div class="mb-3">
+        <h4 class="mb-1">Описание (по желанию, до 250 символов)</h4>
         <textarea id="description" name="description"
         class="@error("description") border-red-500 @else border-gray-300 @enderror bg-white-50 border text-slate-600 outline-none transition-all duration-200 focus:border-[#17b292] focus:ring-2 focus:ring-[#17b292]/20 hover:border-[#17b292] text-sm rounded-lg block w-full px-2.5 py-3 placeholder-gray-400"
-        placeholder="Описание (по желанию)">
+        placeholder="">
         {{ @old('description') }}
         </textarea>
         @error('description')

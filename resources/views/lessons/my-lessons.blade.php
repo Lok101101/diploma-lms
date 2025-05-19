@@ -3,37 +3,42 @@
 @section('title', 'Мои лекции')
 
 @section('content')
-
+@if ($lessons->isEmpty())
+<h2 class="flex justify-center text-bold text-3xl mt-2" style="margin: 0">У вас пока нет созданных лекций</h2>
+<div class="flex justify-center">
+            <a href="{{ route('newLessonConstructor') }}"
+               class="px-5 py-2.5 bg-[#1aa2c0] text-white rounded-lg hover:bg-[#158a9d] transition-colors flex items-center justify-center sm:justify-start whitespace-nowrap mt-5">
+                Новая лекция
+                <svg xmlns="http://www.w3.org/2000/svg" class="ml-2 w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                </svg>
+            </a>
+        </div>
 <div class="grid grid-cols-1 gap-6">
     @isset($course) <h2 class="font-bold text-4xl">Выберите лекцию для добавления в курс {{ $course->name }}</h2> @endisset
-    @if ($lessons->isEmpty())
-        <h2 class="flex justify-center text-bold text-3xl mt-2">У вас пока нет созданных лекций</h2>
-        @empty($course)
-        <div class="flex justify-center">
-            <a href="{{ route('newLessonConstructor') }}"
-               class="px-5 py-2.5 bg-[#1aa2c0] text-white rounded-lg hover:bg-[#158a9d] transition-colors flex items-center">
-                Новая лекция
-                <svg xmlns="http://www.w3.org/2000/svg" class="ml-2 w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                </svg>
-            </a>
-        </div>
-        @endempty
     @else
-        @empty($course)
-        <div class="flex justify-start">
-            <a href="{{ route('newLessonConstructor') }}"
-            class="px-5 py-2.5 bg-[#1aa2c0] text-white rounded-lg hover:bg-[#158a9d] transition-colors flex items-center">
-                Новая лекция
-                <svg xmlns="http://www.w3.org/2000/svg" class="ml-2 w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                </svg>
-            </a>
+    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-4">
+        <div class="relative w-full sm:max-w-md">
+            <input type="text" id="lessonSearch" placeholder="Поиск по названию лекции..." class="w-full pl-10 pr-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#158a9d] focus:border-transparent">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 absolute left-3 top-2.5 text-gray-400" fill="none"
+                 viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+            </svg>
         </div>
-        @endempty
+
+        @teacher
+        <a href="{{ route('newLessonConstructor') }}"
+           class="px-5 py-2.5 bg-[#1aa2c0] text-white rounded-lg hover:bg-[#158a9d] transition-colors flex items-center justify-center sm:justify-start whitespace-nowrap">
+            Новая лекция
+            <svg xmlns="http://www.w3.org/2000/svg" class="ml-2 w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+            </svg>
+        </a>
+        @endTeacher
+    </div>
         @foreach($lessons as $lesson)
-            <div class="bg-white rounded-lg shadow-md overflow-hidden transition-all duration-300 hover:shadow-lg w-full border border-gray-100">
-                <!-- Шапка карточки -->
+            <div class="bg-white rounded-lg shadow-md overflow-hidden transition-all duration-300 hover:shadow-lg w-full border border-gray-100 lesson-card" data-name="{{ mb_strtolower($lesson->name) }}">
                 <div class="bg-[#1aa2c0] px-6 py-4 flex items-center gap-2">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
@@ -41,7 +46,6 @@
                     <h2 class="text-xl font-bold text-white">{{ $lesson->name }}</h2>
                 </div>
 
-                <!-- Тело карточки -->
                 <div class="p-6">
                     <div class="flex flex-wrap items-center justify-between gap-4 mb-6">
                         <div></div>
@@ -72,7 +76,7 @@
                         </form>
 
                         <a href="{{ route('changeLessonConstructor', $lesson) }}"
-                        class="px-5 py-2 bg-[#1aa2c0] text-white rounded-lg hover:bg-[#158a9d] transition-colors flex items-center">
+                        class="px-4 py-2 bg-[#1aa2c0] text-white rounded-lg hover:bg-[#158a9d] transition-colors flex items-center">
                             Редактировать
                             <svg xmlns="http://www.w3.org/2000/svg" class="ml-2 w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
@@ -85,4 +89,23 @@
         @endforeach
     @endif
 </div>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const searchInput = document.getElementById('lessonSearch');
+        const cards = document.querySelectorAll('.lesson-card');
+
+        searchInput.addEventListener('input', function () {
+            const query = this.value.trim().toLowerCase();
+
+            cards.forEach(card => {
+                const name = card.getAttribute('data-name');
+                if (name.includes(query)) {
+                    card.style.display = '';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        });
+    });
+</script>
 @endsection

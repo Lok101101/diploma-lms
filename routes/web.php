@@ -28,7 +28,9 @@ Route::middleware('auth')->group(function () {
 
     Route::view('/courses/create','courses.create-course')->name('create-course');
     Route::post('/courses/create', [CourseController::class, 'createCourse'])->name('create-course');
+    Route::post('/courses/delete/{course}', [CourseController::class, 'deleteCourse'])->name('deleteCourse');
     Route::get('/courses/{course}', [CourseController::class, 'getCoursePublications'])->name('getCoursePublications');
+    Route::post('/courses/publications/delete/{coursePublication}', [CourseController::class, 'deleteCoursePublication'])->name('deleteCoursePublication');
     Route::get('courses/{course}/add/tests', [TestController::class, 'getMyTests'])->name('testsListForAddToCourse');
     Route::post('/courses/{course}/add/{test}', [CourseController::class, 'addTestToCourse'])->name('addTestToCourse');
     Route::get('courses/{course}/add/lessons', [LessonController::class, 'getMyLessons'])->name('lessonsListForAddToCourse');
@@ -52,7 +54,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/lessons/update/{lesson}', [LessonController::class, 'changeLesson'])->name('changeLesson');
     Route::post('/lessons/delete/{lesson}', [LessonController::class, 'deleteLesson'])->name('deleteLesson');
 
-    Route::get('/performance', [UserController::class, 'getUserPerformance'])->name('performance');
+    Route::get('/performance', [UserController::class, 'getUserPerformance'])->name('getUserPerformance');
+    Route::get('/performance/students', [UserController::class, 'getAllUsersPerformance'])->name('getAllUsersPerformance');
 });
 
 Route::middleware('guest')->group(function () {

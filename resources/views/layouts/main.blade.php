@@ -11,12 +11,10 @@
 </head>
 <body>
 <div x-data="{ mobileSidebarOpen: false }">
-    <!-- Page Container -->
     <div
       id="page-container"
       class="mx-auto flex min-h-screen w-full min-w-[320px] flex-col bg-white lg:ps-64"
     >
-      <!-- Page Sidebar -->
       <nav
         id="page-sidebar"
         class="fixed start-0 top-0 bottom-0 z-50 flex h-full w-80 flex-col overflow-auto bg-slate-100 transition-transform duration-500 ease-out lg:w-64 lg:ltr:translate-x-0 lg:rtl:translate-x-0"
@@ -27,21 +25,17 @@
         aria-label="Main Sidebar Navigation"
         x-cloak
       >
-        <!-- Sidebar Header -->
         <div
-          class="flex h-20 w-full flex-none items-center justify-between px-8"
+          class="flex h-20 w-full flex-none items-center justify-between pl-5 lg:justify-center lg:pl-0 lg:pr-4 px-3"
         >
-          <!-- Brand -->
           <a
             href="{{ route('courses') }}"
             class="inline-flex items-center gap-2 text-lg font-bold tracking-wide text-slate-800 transition hover:opacity-75 active:opacity-100"
           >
-          <svg xmlns="http://www.w3.org/2000/svg" class="inline-block w-10 h-10" fill="#17b292" viewBox="0 0 24 24">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10 hidden lg:inline-block" fill="#6A7A8F" viewBox="0 0 24 24">
             <path d="M12 3L1 9l11 6 9-4.91V17h2V9M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82z"/>
           </svg>
           </a>
-          <!-- END Brand -->
-          <!-- Close Sidebar on Mobile -->
           <div class="lg:hidden">
             <button
               type="button"
@@ -62,18 +56,15 @@
               </svg>
             </button>
           </div>
-          <!-- END Close Sidebar on Mobile -->
         </div>
-        <!-- END Sidebar Header -->
 
-        <!-- Main Navigation -->
         <div class="w-full grow space-y-3 p-4">
             <a
             href="{{ route('courses') }}"
             class="{{ request()->routeIs('courses') ? 'current' : ''}} flex items-center gap-3 rounded-lg px-4 py-2.5 font-semibold text-slate-600"
           >
-          <svg xmlns="http://www.w3.org/2000/svg" class="inline-block w-7 h-7" fill="#6A7A8F" viewBox="0 0 24 24">
-            <path d="M12 3L1 9l11 6 9-4.91V17h2V9M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82z"/>
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="#6A7A8F">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
           </svg>
             <span>Курсы</span>
             </a>
@@ -98,10 +89,20 @@
             </svg>
             <span class="">Мои лекции</span>
             </a>
+            <a
+            href="{{ route('getAllUsersPerformance') }}"
+            class="{{ request()->routeIs('getAllUsersPerformance') ? 'current' : ''}} flex items-center gap-3 rounded-lg px-4 py-2.5 font-semibold text-slate-600 hover:bg-white hover:shadow-xs hover:shadow-slate-300/50 active:bg-white/75 active:text-slate-800 active:shadow-slate-300/10"
+          >
+          <svg xmlns="http://www.w3.org/2000/svg" class="inline-block h-7 w-7" viewBox="0 0 24 24" fill="none" stroke="#6A7A8F" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3 20h18M7 16l3-3 2 2 4-5 2 1" />
+            <path stroke-linecap="round" d="M7 16l3-3 2 2 4-5 2 1" />
+          </svg>
+            <span class="">Успеваемость</span>
+            </a>
             @else
             <a
-            href="{{ route('performance') }}"
-            class="{{ request()->routeIs('performance') ? 'current' : ''}} flex items-center gap-3 rounded-lg px-4 py-2.5 font-semibold text-slate-600 hover:bg-white hover:shadow-xs hover:shadow-slate-300/50 active:bg-white/75 active:text-slate-800 active:shadow-slate-300/10"
+            href="{{ route('getUserPerformance') }}"
+            class="{{ request()->routeIs('getUserPerformance') ? 'current' : ''}} flex items-center gap-3 rounded-lg px-4 py-2.5 font-semibold text-slate-600 hover:bg-white hover:shadow-xs hover:shadow-slate-300/50 active:bg-white/75 active:text-slate-800 active:shadow-slate-300/10"
           >
           <svg xmlns="http://www.w3.org/2000/svg" class="inline-block h-7 w-7" viewBox="0 0 24 24" fill="none" stroke="#6A7A8F" stroke-width="2">
             <path stroke-linecap="round" stroke-linejoin="round" d="M3 20h18M7 16l3-3 2 2 4-5 2 1" />
@@ -112,9 +113,7 @@
             @endTeacher
             @endauth
         </div>
-        <!-- END Main Navigation -->
 
-        <!-- Sub Navigation -->
         <div class="w-full flex-none space-y-3 p-4">
             @auth
             <a
@@ -160,11 +159,8 @@
             </a>
             @endguest
         </div>
-        <!-- END Sub Navigation -->
       </nav>
-      <!-- Page Sidebar -->
 
-      <!-- Page Header -->
       <header
         id="page-header"
         class="fixed start-0 end-0 top-0 z-30 flex h-20 flex-none items-center bg-white shadow-xs lg:hidden"
@@ -172,9 +168,11 @@
         <div
           class="container mx-auto flex justify-between px-4 lg:px-8 xl:max-w-7xl"
         >
-          <!-- Left Section -->
+        <svg xmlns="http://www.w3.org/2000/svg" class="inline-block w-10 h-10" fill="#6A7A8F" viewBox="0 0 24 24">
+            <path d="M12 3L1 9l11 6 9-4.91V17h2V9M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82z"/>
+          </svg>
+
           <div class="flex items-center gap-2">
-            <!-- Toggle Sidebar on Mobile -->
             <button
               type="button"
               class="inline-flex items-center justify-center gap-2 rounded-sm border border-slate-200 bg-white px-2 py-1.5 leading-6 font-semibold text-slate-800 shadow-xs hover:border-slate-300 hover:bg-slate-100 hover:text-slate-800 hover:shadow-sm focus:ring-3 focus:ring-slate-500/25 focus:outline-hidden active:border-white active:bg-white active:shadow-none"
@@ -193,36 +191,21 @@
                 />
               </svg>
             </button>
-            <!-- END Toggle Sidebar on Mobile -->
           </div>
-          <!-- END Left Section -->
-
-          <!-- Middle Section -->
-          <!-- END Middle Section -->
-
-          <!-- Right Section -->
-
-          <!-- END Right Section -->
         </div>
       </header>
-      <!-- END Page Header -->
 
-      <!-- Page Content -->
       <main
         id="page-content"
         class="flex max-w-full flex-auto flex-col pt-20 lg:pt-0"
       >
-        <!-- Page Section -->
         <div
           class="container mx-auto space-y-10 px-4 py-8 lg:space-y-16 lg:px-8 lg:py-12 xl:max-w-7xl"
         >
             @yield('content')
         </div>
-        <!-- END Page Section -->
       </main>
-      <!-- END Page Content -->
     </div>
-    <!-- END Page Container -->
   </div>
 </body>
 </html>
