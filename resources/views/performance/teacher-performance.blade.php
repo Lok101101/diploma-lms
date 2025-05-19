@@ -4,6 +4,8 @@
 
 @section('content')
 @empty($users)
+<h2 class="text-3xl text-center">Студентов пока нет. Для просмотра успеваемости должен появиться хотя бы один студент</h2>
+@else
 <div class="relative w-full sm:max-w-md">
     <input type="text" id="studentSearch" placeholder="Поиск по имени студента..."
            class="w-full pl-10 pr-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#17b292] focus:border-transparent">
@@ -52,8 +54,6 @@
     </div>
     @endforeach
 </div>
-@else
-<h2 class="text-3xl text-center">Студентов пока нет. Для просмотра успеваемости должен появиться хотя бы один студент</h2>
 @endempty
 <script>
     document.addEventListener('DOMContentLoaded', function () {

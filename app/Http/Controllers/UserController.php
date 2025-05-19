@@ -48,8 +48,7 @@ class UserController extends Controller
         }
 
         if (count($passesTests) !== 0) {
-            $avgEstimation = array_sum($estimations) / count($passesTests);
-            return view('performance.student-performance', ['passesTests' => $passesTests, 'avgEstimation' => $avgEstimation]);
+            return view('performance.student-performance', ['passesTests' => $passesTests);
         }
 
         return view('performance.student-performance');
