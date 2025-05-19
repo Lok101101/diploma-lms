@@ -28,7 +28,18 @@
     import Header from 'https://cdn.skypack.dev/@editorjs/header';
     import Paragraph from 'https://cdn.skypack.dev/@editorjs/paragraph';
     import List from 'https://cdn.skypack.dev/@editorjs/list';
+    import Checklist from 'https://cdn.skypack.dev/@editorjs/checklist';
     import Quote from 'https://cdn.skypack.dev/@editorjs/quote';
+    import Warning from 'https://cdn.skypack.dev/@editorjs/warning';
+    import Marker from 'https://cdn.skypack.dev/@editorjs/marker';
+    import CodeTool from 'https://cdn.skypack.dev/@editorjs/code';
+    import Delimiter from 'https://cdn.skypack.dev/@editorjs/delimiter';
+    import InlineCode from 'https://cdn.skypack.dev/@editorjs/inline-code';
+    import LinkTool from 'https://cdn.skypack.dev/@editorjs/link';
+    import Embed from 'https://cdn.skypack.dev/@editorjs/embed';
+    import Table from 'https://cdn.skypack.dev/@editorjs/table';
+    import ImageTool from 'https://cdn.skypack.dev/@editorjs/image';
+    import SimpleImage from 'https://cdn.skypack.dev/@editorjs/simple-image';
 
     const lessonData = {!! $lesson->content !!};
 
@@ -37,11 +48,56 @@
       readOnly: true,
       data: lessonData,
       tools: {
-        paragraph: Paragraph,
-        header: Header,
-        list: List,
-        quote: Quote
-      }
+          header: {
+            class: Header
+          },
+          image: {
+            class: SimpleImage,
+            config: {
+              endpoints: {
+                byFile: '/upload/image',
+                byUrl: '/upload/image-by-url'
+              }
+            }
+          },
+          list: {
+            class: List
+          },
+          quote: {
+            class: Quote
+          },
+          warning: {
+            class: Warning
+          },
+          marker: {
+            class: Marker
+          },
+          code: {
+            class: CodeTool
+          },
+          delimiter: {
+            class: Delimiter
+          },
+          inlineCode: {
+            class: InlineCode
+          },
+          linkTool: {
+            class: LinkTool
+          },
+          embed: {
+            class: Embed,
+            config: {
+              services: {
+                youtube: true,
+                coub: true,
+                codepen: true
+              }
+            }
+          },
+          table: {
+            class: Table
+          }
+        }
     });
   </script>
 </body>

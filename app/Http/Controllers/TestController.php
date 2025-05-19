@@ -17,11 +17,13 @@ class TestController extends Controller
     }
 
     public function getMyTests(Course $course = null) {
+        $tests = Test::where('user_id', '=', Auth::id())->orderBy('created_at', 'desc')->get();
+
         if ($course != null) {
-            return view('tests.my-tests', ['tests' => Test::where('user_id', '=', Auth::id())->get(), 'course' => $course]);
+            return view('tests.my-tests', ['tests' => $tests, 'course' => $course]);
         }
 
-        return view('tests.my-tests', ['tests' => Test::where('user_id', '=', Auth::id())->get()]);
+        return view('tests.my-tests', ['tests' => $tests]);
     }
 
     public function changeTest(Test $test) {
@@ -51,6 +53,6 @@ class TestController extends Controller
             'estimation' => $request->estimation
         ]);
 
-        return redirect()->route('courses');
+        return redirect()->route('getUserPerformance');
     }
 }

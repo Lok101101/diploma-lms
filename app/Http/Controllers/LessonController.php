@@ -16,11 +16,13 @@ class LessonController extends Controller
     }
 
     public function getMyLessons(Course $course = null) {
+        $lessons = Lesson::where('user_id', '=', Auth::id())->orderBy('created_at', 'desc')->get();
+
         if ($course != null) {
-            return view('lessons.my-lessons', ['lessons' => Lesson::where('user_id', '=', Auth::id())->get(), 'course' => $course]);
+            return view('lessons.my-lessons', ['lessons' => $lessons, 'course' => $course]);
         }
 
-        return view('lessons.my-lessons', ['lessons' => Lesson::where('user_id', '=', Auth::id())->get()]);
+        return view('lessons.my-lessons', ['lessons' => $lessons]);
     }
 
     public function changeLesson(Request $request, Lesson $lesson) {

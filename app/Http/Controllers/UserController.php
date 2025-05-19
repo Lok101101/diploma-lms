@@ -48,7 +48,7 @@ class UserController extends Controller
         }
 
         if (count($passesTests) !== 0) {
-            return view('performance.student-performance', ['passesTests' => $passesTests);
+            return view('performance.student-performance', ['passesTests' => $passesTests]);
         }
 
         return view('performance.student-performance');

@@ -212,7 +212,7 @@
             // Добавляем отображение оценки
             const gradeElement = document.createElement('div');
             gradeElement.className = `result-grade ${gradeClass}`;
-            gradeElement.innerHTML = `<strong>Ваша оценка:</strong> ${grade} (${percentage}%)`;
+            gradeElement.innerHTML = `<strong>Ваша оценка:</strong> ${grade} (${Math.round(percentage)}%)`;
             document.querySelector('.result-score').after(gradeElement);
 
             // Детализация по вопросам
