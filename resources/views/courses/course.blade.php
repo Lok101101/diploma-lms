@@ -25,6 +25,7 @@
     @if ($course->publications->isEmpty())
         <h2 class="flex justify-center text-bold text-3xl mt-8">У этого курса пока нет публикаций</h2>
     @else
+        <h2 class="flex justify-center text-4xl mb-11">{{ $course->name }}</h2>
         <div class="flex flex-col gap-5">
             @foreach ($course->publications as $publication)
                 @if ($publication->test == null)

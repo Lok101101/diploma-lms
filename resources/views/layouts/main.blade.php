@@ -15,7 +15,7 @@
       <nav id="page-sidebar" class="fixed start-0 top-0 bottom-0 z-50 flex h-full w-80 flex-col overflow-auto bg-slate-100 transition-transform duration-500 ease-out lg:w-64 lg:ltr:translate-x-0 lg:rtl:translate-x-0" x-bind:class="{ 'ltr:-translate-x-full rtl:translate-x-full': !mobileSidebarOpen,'translate-x-0': mobileSidebarOpen, }" aria-label="Main Sidebar Navigation" x-cloak>
         <div class="flex h-20 w-full flex-none items-center justify-between pl-5 lg:justify-center lg:pl-0 lg:pr-4 px-3">
           <a href="{{ route('courses') }}" class="inline-flex items-center gap-2 text-lg font-bold tracking-wide text-slate-800 transition hover:opacity-75 active:opacity-100">
-          <svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10 hidden lg:inline-block" fill="#6A7A8F" viewBox="0 0 24 24">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10 inline-block pl-2 lg:pl-0" fill="#6A7A8F" viewBox="0 0 24 24">
             <path d="M12 3L1 9l11 6 9-4.91V17h2V9M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82z"/>
           </svg>
           </a>
