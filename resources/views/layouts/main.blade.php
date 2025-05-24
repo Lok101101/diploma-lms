@@ -105,9 +105,11 @@
 
       <header id="page-header" class="fixed start-0 end-0 top-0 z-30 flex h-20 flex-none items-center bg-white shadow-xs lg:hidden">
         <div class="container mx-auto flex justify-between px-4 lg:px-8 xl:max-w-7xl">
-        <svg xmlns="http://www.w3.org/2000/svg" class="inline-block w-10 h-10" fill="#6A7A8F" viewBox="0 0 24 24">
-            <path d="M12 3L1 9l11 6 9-4.91V17h2V9M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82z"/>
-          </svg>
+        <a href="{{ route('courses') }}">
+            <svg xmlns="http://www.w3.org/2000/svg" class="inline-block w-10 h-10" fill="#6A7A8F" viewBox="0 0 24 24">
+                <path d="M12 3L1 9l11 6 9-4.91V17h2V9M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82z"/>
+            </svg>
+        </a>
 
           <div class="flex items-center gap-2">
             <button type="button" class="inline-flex items-center justify-center gap-2 rounded-sm border border-slate-200 bg-white px-2 py-1.5 leading-6 font-semibold text-slate-800 shadow-xs hover:border-slate-300 hover:bg-slate-100 hover:text-slate-800 hover:shadow-sm focus:ring-3 focus:ring-slate-500/25 focus:outline-hidden active:border-white active:bg-white active:shadow-none" x-on:click="mobileSidebarOpen = true">
