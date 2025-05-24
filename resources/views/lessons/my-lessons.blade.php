@@ -3,19 +3,21 @@
 @section('title', 'Мои лекции')
 
 @section('content')
+@isset($course)
+<h2 class="font-bold text-4xl">Выберите лекцию для добавления в курс {{ $course->name }}</h2>
+@endisset
 <div class="grid grid-cols-1 gap-6">
     @if ($lessons->isEmpty())
     <h2 class="flex justify-center text-bold text-3xl mt-2" style="margin: 0">У вас пока нет созданных лекций</h2>
     <div class="flex justify-center">
         <a href="{{ route('newLessonConstructor') }}"
-        class="px-5 py-2.5 bg-[#1aa2c0] text-white rounded-lg hover:bg-[#158a9d] transition-colors flex items-center justify-center sm:justify-start whitespace-nowrap mt-5">
+        class="px-5 py-2.5 bg-[#1aa2c0] text-white rounded-lg hover:bg-[#158a9d] transition-colors flex items-center justify-center sm:justify-start whitespace-nowrap">
             Новая лекция
             <svg xmlns="http://www.w3.org/2000/svg" class="ml-2 w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
             </svg>
         </a>
     </div>
-    @isset($course) <h2 class="font-bold text-4xl">Выберите лекцию для добавления в курс {{ $course->name }}</h2> @endisset
     @else
     <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-4">
         <div class="relative w-full sm:max-w-md">

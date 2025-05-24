@@ -45,7 +45,7 @@
             clear: "Очистить",
             change: "Поменять",
             set: "Установить",
-            correctAnswer: "Правильный ответ",
+            correctAnswer: "правильный ответ",
             clearCorrectAnswer: "Сбросить правильный ответ"
         };
 

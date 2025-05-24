@@ -51,14 +51,11 @@
           header: {
             class: Header
           },
-          image: {
-            class: SimpleImage,
-            config: {
-              endpoints: {
-                byFile: '/upload/image',
-                byUrl: '/upload/image-by-url'
-              }
-            }
+          simpleImage: {
+            class: SimpleImage
+          },
+          checklist: {
+            class: Checklist
           },
           list: {
             class: List

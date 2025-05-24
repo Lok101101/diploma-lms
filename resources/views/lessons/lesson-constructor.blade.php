@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="https://cdn.tailwindcss.com"></script>
-  <title>Конструктор статьи</title>
+  <title>Редактор лекции @isset($lesson) {{ $lesson->name }} @endisset</title>
   <style>
     .ce-header {
       padding: 1em 0;
@@ -28,11 +28,9 @@
 <body class="bg-gray-100 p-8 max-w-6xl mx-auto" onload="initEditor()">
   <div class="flex justify-between items-center mb-6">
     @isset($lesson)
-      <input type="text" id="lessonTitle" placeholder="Название лекции"
-             class="w-50 px-4 py-2 text-base bg-white border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
-             value="{{ $lesson->name }}">
+        <h2 id="lessonTitle" class="text-3xl font-bold text-gray-800">{{ $lesson->name }}</h2>
     @else
-      <input type="text" id="lessonTitle" placeholder="Название лекции"
+        <input type="text" id="lessonTitle" placeholder="Название лекции"
              class="w-50 px-4 py-2 text-base bg-white border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent">
     @endisset
 
@@ -72,7 +70,6 @@
     import LinkTool from 'https://cdn.skypack.dev/@editorjs/link';
     import Embed from 'https://cdn.skypack.dev/@editorjs/embed';
     import Table from 'https://cdn.skypack.dev/@editorjs/table';
-    import ImageTool from 'https://cdn.skypack.dev/@editorjs/image';
     import SimpleImage from 'https://cdn.skypack.dev/@editorjs/simple-image';
 
     let editor;
@@ -97,14 +94,11 @@
               defaultLevel: 2
             },
           },
-          image: {
-            class: SimpleImage,
-            config: {
-              endpoints: {
-                byFile: '/upload/image',
-                byUrl: '/upload/image-by-url'
-              }
-            }
+          simpleImage: {
+            class: SimpleImage
+          },
+          checklist: {
+            class: Checklist
           },
           list: {
             class: List,
@@ -267,7 +261,11 @@
       });
 
       document.getElementById('saveBtn').addEventListener('click', async () => {
+        @isset($lesson)
+        const title = document.getElementById('lessonTitle').textContent
+        @else
         const title = document.getElementById('lessonTitle').value;
+        @endisset
         if (!title) {
           alert("Введите название статьи");
           return;

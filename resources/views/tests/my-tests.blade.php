@@ -3,9 +3,10 @@
 @section('title', 'Мои тесты')
 
 @section('content')
-
+@isset($course)
+<h2 class="font-bold text-4xl">Выберите тест для добавления в курс {{ $course->name }}</h2>
+@endisset
 <div class="grid grid-cols-1 gap-6">
-    @isset($course) <h2 class="font-bold text-4xl">Выберите тест для добавления в курс {{ $course->name }}</h2> @endisset
     @if ($tests->isEmpty())
         <h2 class="flex justify-center text-bold text-3xl">У вас пока нет созданных тестов</h2>
         <div class="flex justify-center">

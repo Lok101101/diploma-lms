@@ -9,7 +9,7 @@
         <h2 class="text-center text-bold text-3xl">Пока нет ни одного курса
         <div class="flex justify-center mt-5">
             @teacher
-            <a href="{{ route('create-course') }}"
+            <a href="{{ route('createCoursePage') }}"
                class="px-5 py-2.5 bg-[#17b292] text-white rounded-lg hover:bg-[#11957a] transition-colors flex items-center gap-1">
                 Новый курс
                 <svg xmlns="http://www.w3.org/2000/svg" class="ml-2 w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -31,7 +31,7 @@
         </div>
 
         @teacher
-        <a href="{{ route('create-course') }}"
+        <a href="{{ route('createCoursePage') }}"
            class="px-5 py-2.5 bg-[#17b292] text-white rounded-lg hover:bg-[#11957a] transition-colors flex items-center justify-center sm:justify-start whitespace-nowrap">
             Новый курс
             <svg xmlns="http://www.w3.org/2000/svg" class="ml-2 w-4 h-4" fill="none" viewBox="0 0 24 24"
@@ -55,7 +55,7 @@
 
                 <div class="p-6">
                     <div class="flex justify-between gap-4 mb-4">
-                        <p class="text-gray-600 mb-6 line-clamp-3">
+                        <p class="text-gray-600 mb-6 line-clamp-3 w-230">
                             {{ $course->description ?? '' }}
                         </p>
 

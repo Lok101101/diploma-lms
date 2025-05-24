@@ -1,9 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Интерактивный тест</title>
+    <title>{{ $test->name }}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Используем стандартную тему SurveyJS -->
     <link href="https://unpkg.com/survey-core/defaultV2.min.css" rel="stylesheet">
     <link href="https://unpkg.com/survey-core/survey-core.min.css" rel="stylesheet">
     <script src="https://unpkg.com/survey-core/survey.core.min.js"></script>
@@ -159,11 +158,9 @@
         surveyJson.progressBarType = 'questions';
         surveyJson.completeText = 'Завершить';
 
-        // Инициализация теста
         const survey = new Survey.Model(surveyJson);
         survey.locale = "ru";
 
-        // Отображение результатов
         survey.onComplete.add((sender, options) => {
             document.getElementById("surveyContainer").style.display = "none";
             document.getElementById("resultsContainer").style.display = "block";
@@ -171,20 +168,16 @@
             const questions = sender.getAllQuestions();
             let correctAnswers = 0;
 
-            // Подсчет правильных ответов
             questions.forEach(q => {
                 if (q.isAnswerCorrect()) correctAnswers++;
             });
 
-            // Обновление статистики
             document.getElementById("score").textContent = correctAnswers;
             document.getElementById("total").textContent = questions.length;
 
-            // Расчет процента правильных ответов
             const percentage = (correctAnswers / questions.length) * 100;
             document.getElementById("progressBar").style.width = percentage + "%";
 
-            // Система оценок
             let grade = '';
             let gradeClass = '';
             let estimation = 0;
@@ -209,13 +202,11 @@
 
             document.getElementById('estimation').value = estimation;
 
-            // Добавляем отображение оценки
             const gradeElement = document.createElement('div');
             gradeElement.className = `result-grade ${gradeClass}`;
             gradeElement.innerHTML = `<strong>Ваша оценка:</strong> ${grade} (${Math.round(percentage)}%)`;
             document.querySelector('.result-score').after(gradeElement);
 
-            // Детализация по вопросам
             const resultsDiv = document.getElementById("detailedResults");
             resultsDiv.innerHTML = "";
 
@@ -223,20 +214,41 @@
                 const questionDiv = document.createElement("div");
                 questionDiv.className = "question-result";
 
-                questionDiv.innerHTML = `
+                let userAnswerDisplay;
+                let correctAnswerDisplay;
+
+                if (question.getType() === 'matrix') {
+                    userAnswerDisplay = Object.entries(question.value || {})
+                        .map(([key, value]) => `${key} → ${value}`)
+                        .join(', ');
+
+                    correctAnswerDisplay = Object.entries(question.correctAnswer)
+                        .map(([key, value]) => `${key} → ${value}`)
+                        .join(', ');
+                } else if (question.getType() === 'radiogroup') {
+                    userAnswerDisplay = question.value || "Нет ответа";
+                    correctAnswerDisplay = question.choices.find(c => c.value === question.correctAnswer)?.text || question.correctAnswer;
+                } else if (question.getType() === 'checkbox') {
+                    userAnswerDisplay = question.value ? question.value.join(', ') : "Нет ответа";
+                    correctAnswerDisplay = question.correctAnswer.join(', ');
+                } else {
+                    userAnswerDisplay = question.value || "Нет ответа";
+                    correctAnswerDisplay = question.correctAnswer;
+                }
+
+                    questionDiv.innerHTML = `
                     <div class="question-text">${index + 1}. ${question.title}</div>
                     <div class="user-answer ${question.isAnswerCorrect() ? 'correct' : 'incorrect'}">
-                        Ваш ответ: ${question.value || "Нет ответа"}
+                        Ваш ответ: ${userAnswerDisplay}
                     </div>
                     ${!question.isAnswerCorrect() ?
-                        `<div class="correct-answer">Правильный ответ: ${question.correctAnswer}</div>` : ''}
+                        `<div class="correct-answer">Правильный ответ: ${correctAnswerDisplay}</div>` : ''}
                 `;
 
                 resultsDiv.appendChild(questionDiv);
         });
     });
 
-        // Рендеринг теста после загрузки страницы
         document.addEventListener("DOMContentLoaded", function() {
             survey.render(document.getElementById("surveyContainer"));
         });

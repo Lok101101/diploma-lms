@@ -17,46 +17,32 @@ class CoursesSeeder extends Seeder
         $courses = [
             [
                 'name' => 'Laravel для начинающих',
-                'description' => 'Полный курс по основам Laravel: routing, Eloquent, Blade и создание первого приложения',
+                'description' => 'В этом курсе вы познакомитесь с популярным PHP-фреймворком Laravel. Вас ждёт обзор структуры проектов, маршрутизации, контроллеров и возможностей Eloquent ORM для удобной работы с базой данных.',
                 'user_id' => User::where('name', '=', 'teacher')->first()->id,
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
-                'name' => 'Продвинутый Laravel',
-                'description' => 'Изучение сложных тем: очереди, события, тестирование, производительность',
+                'name' => 'Основы JavaScript',
+                'description' => 'Вы изучите историю языка, его назначение, базовый синтаксис, работу с переменными и типами данных, а также научитесь использовать JavaScript для создания интерактивных веб-страниц.',
                 'user_id' => User::where('name', '=', 'teacher')->first()->id,
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'name' => 'PHP: Основы программирования',
-                'description' => 'Основы PHP для начинающих: синтаксис, функции, ООП',
-                'user_id' => User::where('name', '=', 'teacher')->first()->id,
-                'created_at' => now(),
-                'updated_at' => now()
-            ],
-            [
-                'name' => 'JavaScript и Vue.js',
-                'description' => 'Современный JavaScript и интеграция Vue.js с Laravel',
+                'description' => 'История, синтаксис и базовые возможности языка PHP. Вы узнаете, как создавать переменные, работать с основными управляющими конструкциями и писать простые функции для динамических веб-сайтов.',
                 'user_id' => User::where('name', '=', 'teacher')->first()->id,
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'name' => 'Базы данных и SQL',
-                'description' => 'Работа с MySQL, оптимизация запросов и взаимодействие с Eloquent',
+                'description' => 'Этот курс познакомит вас с основами языка SQL — стандартного инструмента для работы с реляционными базами данных. Вы научитесь создавать таблицы, выполнять запросы на выборку, добавление, изменение и удаление данных, а также узнаете об истории и возможностях SQL.',
                 'user_id' => User::where('name', '=', 'teacher')->first()->id,
                 'created_at' => now(),
                 'updated_at' => now()
             ],
-            [
-                'name' => 'API на Laravel',
-                'description' => 'Создание RESTful API с аутентификацией и документацией',
-                'user_id' => User::where('name', '=', 'teacher')->first()->id,
-                'created_at' => now(),
-                'updated_at' => now()
-            ]
         ];
 
         DB::table('courses')->insert($courses);

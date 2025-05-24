@@ -1,8 +1,9 @@
 @extends('layouts.main')
 
-@section('title', 'Курс')
+@section('title', $course->name)
 
 @section('content')
+@teacher
     <div class="flex justify-start gap-3">
         <a href="{{ route('testsListForAddToCourse', $course) }}"
            class="px-5 py-2.5 bg-[#1a9b9e] text-white rounded-lg hover:bg-[#158487] transition-colors flex items-center">
@@ -19,6 +20,7 @@
             </svg>
         </a>
     </div>
+@endTeacher
 
     @if ($course->publications->isEmpty())
         <h2 class="flex justify-center text-bold text-3xl mt-8">У этого курса пока нет публикаций</h2>
