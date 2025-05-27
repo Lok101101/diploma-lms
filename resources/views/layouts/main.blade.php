@@ -4,11 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
-    <link rel="stylesheet" href="{{ asset('css/main.styles.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <link rel="icon" href="{{ asset('favicon.svg') }}">
     <title>@yield('title')</title>
+
+    <style>
+    .current {
+        background-color: white;
+        box-shadow: 0 1px 2px 0 rgba(203, 213, 225, 0.5);
+    }
+
+    [x-cloak] { display: none !important; }
+    </style>
 </head>
 <body>
 <div x-data="{ mobileSidebarOpen: false }">

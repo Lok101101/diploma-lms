@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
+  <title>Редактор лекции</title>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="{{ asset('favicon.svg') }}">
   <script src="https://cdn.tailwindcss.com"></script>
-  <title>Редактор лекции @isset($lesson) {{ $lesson->name }} @endisset</title>
   <style>
     .ce-header {
       padding: 1em 0;
@@ -26,12 +27,12 @@
   </style>
 </head>
 <body class="bg-gray-100 p-8 max-w-6xl mx-auto" onload="initEditor()">
-  <div class="flex justify-between items-center mb-6">
+  <div class="flex justify-between items-center mb-6 @empty($lesson) flex-col @endempty items-center justify-between sm:flex-row gap-y-2 gap-x-3">
     @isset($lesson)
-        <h2 id="lessonTitle" class="text-3xl font-bold text-gray-800">{{ $lesson->name }}</h2>
+        <h2 id="lessonTitle" class="text-2xl sm:text-4xl font-bold text-gray-800">{{ $lesson->name }}</h2>
     @else
         <input type="text" id="lessonTitle" placeholder="Название лекции"
-             class="w-50 px-4 py-2 text-base bg-white border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent">
+             class="w-full px-4 py-2 text-base bg-white border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent">
     @endisset
 
     <button id="saveBtn" class="px-6 py-2 bg-green-500 hover:bg-green-600 text-white rounded-lg transition-colors">

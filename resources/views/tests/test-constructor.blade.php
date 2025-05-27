@@ -4,6 +4,7 @@
     <title>Конструктор теста</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="{{ asset('favicon.svg') }}">
     <link href="https://unpkg.com/survey-core/survey-core.min.css" type="text/css" rel="stylesheet">
     <script src="https://unpkg.com/survey-core/survey.core.min.js"></script>
     <script src="https://unpkg.com/survey-js-ui/survey-js-ui.min.js"></script>
@@ -19,18 +20,13 @@
     </style>
 </head>
 <body class="h-screen overflow-hidden bg-gray-50">
-    <div class="header bg-gray-100 p-4 border-b border-gray-200">
-        <div class="flex items-center justify-between">
-            <div class="relative w-1/2">
-                <input type="text" id="surveyName" placeholder="Название теста" value="Тест"
-                       class="w-90 pl-4 pr-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#4CAF50] focus:border-transparent">
-            </div>
-            <div class="flex items-center">
-                <span id="statusMessage" class="ml-3 text-gray-600 italic"></span>
-                <button id="saveBtn" class="ml-4 px-5 py-2 bg-[#4CAF50] text-white rounded-lg hover:bg-[#45a049] transition-colors">
-                    Сохранить на сервер
-                </button>
-            </div>
+    <div class="header bg-gray-100 p-3 sm:p-4 border-b border-gray-200">
+        <div class="flex items-center justify-between flex-col sm:flex-row gap-y-2 gap-x-3">
+            <input type="text" id="surveyName" placeholder="Название теста" class="w-full pl-4 pr-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#4CAF50] focus:border-transparent">
+
+            <button id="saveBtn" class="px-3 py-2 bg-[#4CAF50] text-white rounded-lg hover:bg-[#45a049] transition-colors">
+                Сохранить
+            </button>
         </div>
     </div>
 
@@ -70,8 +66,13 @@
         });
 
         document.getElementById('saveBtn').addEventListener('click', () => {
-            const surveyName = document.getElementById('surveyName').value || 'Тест';
+            const surveyName = document.getElementById('surveyName').value;
             const surveyJson = creator.text;
+
+            if (!surveyName) {
+                alert("Введите название теста для сохранения");
+                return;
+            }
 
             document.getElementById('formSurveyName').value = surveyName;
             document.getElementById('formSurveyJson').value = surveyJson;

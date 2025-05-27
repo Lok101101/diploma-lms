@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Конструктор теста {{ $test->name }}</title>
+    <title>Конструктор теста</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="{{ asset('favicon.svg') }}">
     <link href="https://unpkg.com/survey-core/survey-core.min.css" rel="stylesheet">
     <script src="https://unpkg.com/survey-core/survey.core.min.js"></script>
     <script src="https://unpkg.com/survey-js-ui/survey-js-ui.min.js"></script>
@@ -21,13 +22,10 @@
 <body class="h-screen overflow-hidden bg-gray-50">
     <div class="header bg-gray-100 p-4 border-b border-gray-200">
         <div class="flex items-center justify-between w-full">
-            <h2 class="text-4xl font-bold text-gray-800">{{ $test->name }}</h2>
-            <div class="flex items-center">
-                <span id="statusMessage" class="ml-3 text-gray-600 italic"></span>
-                <button id="saveBtn" class="ml-4 px-5 py-2 bg-green-500 hover:bg-green-600 text-white rounded-lg transition-colors">
-                    Сохранить изменения
-                </button>
-            </div>
+            <h2 class="text-2xl sm:text-4xl font-bold text-gray-800">{{ $test->name }}</h2>
+            <button id="saveBtn" class="ml-4 px-5 py-2 bg-green-500 hover:bg-green-600 text-white rounded-lg transition-colors">
+                Сохранить
+            </button>
         </div>
     </div>
 
